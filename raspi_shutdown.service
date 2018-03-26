@@ -1,0 +1,15 @@
+[Unit]
+Description=Shutdown Button
+After=syslog.target network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 shutdown.py
+WorkingDirectory=/home/pi/app/shutdown/
+KillMode=process
+Restart=always
+#User=pi
+#Group=pi
+
+[Install]
+WantedBy=multi-user.target
