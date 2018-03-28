@@ -40,7 +40,7 @@ def main(args):
 				print("Switchの状態",not(state))
 				counter = 0
 				# 押されるまで、まち？
-				GPIO.wait_for_edge(sw_pin, GPIO.FALLING)
+				GPIO.wait_for_edge(sw_pin, GPIO.FALLING, timeout=2000)
 			print("Counter: ",counter)
 			time.sleep(interval)
 			sys.stdout.flush()
