@@ -18,32 +18,38 @@ def main(args):
 	GPIO.setmode(GPIO.BCM)
 	GPIO.setup(sw_pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-	interval = 0.02
-	counter = 0
+	interval = 0.1  # ボタン押下中のチェックインターバル(秒)
+	shutdown_second = 3 # Shutdownまでのボタン押下時間(秒)
+	max_counter = shutdown_second / interval
+	print(max_counter)
+
 	try:
+		counter = 0
 		while True:
-			#押した直後なのでゼロかな
+			#押した直後なのでゼロ
 			state = GPIO.input(sw_pin)
-			# 押しているときはゼロ.1のときは、で分岐。
-			if(not(state)):
-				print("Switchの状態",not(state))
+			# 押しているときは０、それ以外で分岐。
+			isClick = not(state)
+			sysout("Switchの状態:{0}".format(isClick))
+			sysout("Counter: [{0:3.1f}]".format(counter)) # 全体で3桁、小数点1桁
+
+			if(isClick): #押してるときは
 				counter += 1
 				# 3秒おしぱなしだったら。
-				if(counter > 100):
+				if(counter > max_counter):
+					counter = 0
 					shutdownMessage = 'shutdownします'
 					# speak( shutdownMessage )
-					time.sleep(1)
 					sysout(shutdownMessage)
+					# return
 					subprocess.call('sudo shutdown -h now',shell=True)
-					counter = 0
+				else:
+					time.sleep(interval)
 			else:
-				print("Switchの状態",not(state))
 				counter = 0
-				# 押されるまで、まち？
-				GPIO.wait_for_edge(sw_pin, GPIO.FALLING)
-			print("Counter: ",counter)
-			time.sleep(interval)
-			sys.stdout.flush()
+				# 押下待ちののタイムアウト時間(2000ms)。設定しておかないとアプリが終了できない
+				GPIO.wait_for_edge(sw_pin, GPIO.FALLING, timeout=3000)
+				# GPIO.wait_for_edge(sw_pin, GPIO.FALLING)
 
 	except Exception as e:
 		raise
