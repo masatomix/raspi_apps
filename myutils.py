@@ -1,6 +1,6 @@
 import os
 import sys
-
+import subprocess
 
 def cleanup(*args):
     sys.exit(0)
@@ -20,3 +20,17 @@ def contains(input, targets):
 def sysout(message):
     print(message)
     sys.stdout.flush()
+
+
+# 非同期でしゃべる(未使用)
+def speakAsync(message):
+    print(message)
+    sys.stdout.flush()
+    subprocess.call('/home/pi/app/aquestalkpi/AquesTalkPi "' + message + '" | aplay &', shell=True)
+
+
+# 同期でしゃべる
+def speak(message):
+    print(message)
+    sys.stdout.flush()
+    subprocess.call('/home/pi/app/aquestalkpi/AquesTalkPi "' + message + '" | aplay ', shell=True)

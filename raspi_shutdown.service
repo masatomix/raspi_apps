@@ -4,8 +4,8 @@ After=syslog.target network.target
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 shutdown.py
-WorkingDirectory=/home/pi/app/raspi_shutdown/
+ExecStart=/usr/bin/python3 my_shutdown.py
+WorkingDirectory=/home/pi/app/raspi_apps/
 KillMode=process
 Restart=always
 #User=pi
