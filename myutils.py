@@ -26,11 +26,11 @@ def sysout(message):
 def speakAsync(message):
     print(message)
     sys.stdout.flush()
-    subprocess.call('/home/pi/aquestalkpi/app/aquestalkpi/AquesTalkPi "' + message + '" | aplay &', shell=True)
+    subprocess.call('/home/pi/app/aquestalkpi/AquesTalkPi "' + message + '" | aplay &', shell=True)
 
 
 # 同期でしゃべる
 def speak(message):
     print(message)
     sys.stdout.flush()
-    subprocess.call('/home/pi/aquestalkpi/app/aquestalkpi/AquesTalkPi "' + message + '" | aplay ', shell=True)
+    subprocess.call('/home/pi/app/aquestalkpi/AquesTalkPi "' + message + '" | aplay ', shell=True)
