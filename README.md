@@ -45,3 +45,6 @@ $ sudo systemctl start  raspi_shutdown
 ```
 $ sudo journalctl  -f -u raspi_shutdown
 ```
+
+
+ver.1.0.3
